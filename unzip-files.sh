@@ -65,8 +65,6 @@ mv ./trebon_update/system/lib/libOmxVidEnc.so ./vendor/$MANUFACTURER/$DEVICE/pro
 mv ./trebon_update/system/lib/libOmxVp8Dec.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
 mv ./trebon_update/system/lib/libOmxWmaDec.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
 mv ./trebon_update/system/lib/libOmxWmvDec.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
-mv ./trebon_update/system/lib/libOpenSLES.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
-mv ./trebon_update/system/lib/libOpenVG.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
 
 # omx shared libs [OK]
 mv ./trebon_update/system/lib/libomx_aacdec_sharedlibrary.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
@@ -84,7 +82,7 @@ mv ./trebon_update/system/lib/libmmipl.so ./vendor/$MANUFACTURER/$DEVICE/proprie
 mv ./trebon_update/system/lib/libjpeg.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
 mv ./trebon_update/system/lib/libActionShot.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
 mv ./trebon_update/system/lib/libarccamera.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
-mv ./trebon_update/system/lib/libarccamera.solibarcplatform.so  ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
+mv ./trebon_update/system/lib/libarccamera.solibarcplatform.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
 mv ./trebon_update/system/lib/libarccamera.solibarcsoft_subtitle.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
 mv ./trebon_update/system/lib/libCaMotion.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
 mv ./trebon_update/system/lib/libcaps.so ./vendor/$MANUFACTURER/$DEVICE/proprietary/lib
