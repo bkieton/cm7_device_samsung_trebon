@@ -1,49 +1,10 @@
-
-service dhcp-service /system/bin/netcfg wlan0 dhcp
-        oneshot
-
-on property:dev.bootcomplete=1
-        stop dhcp-service
-        start dhcp-service
-
-on init
-
-on fs
-    wait /dev/block/mmcblk0p16
-    mount ext4 /dev/block/mmcblk0p16 /system barrier=1
-    #mount ext4 /dev/block/mmcblk0p16 /system ro remount
-    wait /dev/block/mmcblk0p18
-    exec /system/bin/e2fsck -v -y /dev/block/mmcblk0p18
-    mount ext4 /dev/block/mmcblk0p18 /data nosuid nodev barrier=1 noauto_da_alloc
-    #mount ext4 /dev/block/mmcblk0p11 /persist nosuid nodev barrier=1
-    mount ext4 /dev/block/mmcblk0p17 /cache nosuid nodev barrier=1
-
-    wait /dev/block/mmcblk0p19
-    exec check_filesystem /dev/block/mmcblk0p19 ext4
-    mount ext4 /dev/block/mmcblk0p19 /efs nosuid nodev barrier=1
-    chown radio system /efs
-    chmod 0771 /efs
-    mkdir /efs/imei 0775
-    chown radio system /efs/imei
-    chown system system /efs/calibartion_data
-    chown radio system /efs/imei/keystr
-    chmod 0775 /efs/imei
-    chmod 0775 /efs/imei/keystr
-    chown root system /dev/block/mmcblk0p13
-    chmod 0660 /dev/block/mmcblk0p13
-
 on boot
 # CPU Governor
-	#chmod 0660 /sys/class/sec/cpu/cpu_gov
-	#chown root system /sys/class/sec/cpu/cpu_gov
-
-	chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-	chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-	chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-	chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chown radio radio /sys/devices/virtual/pdp/pdp/waketime
-
     chown radio system /sys/android_power/state
     chown radio system /sys/android_power/request_state
     chown radio system /sys/android_power/acquire_full_wake_lock
@@ -81,12 +42,12 @@ on boot
     chown system system /sys/kernel/ipv4/tcp_rmem_min
     chown system system /sys/kernel/ipv4/tcp_rmem_def
     chown system system /sys/kernel/ipv4/tcp_rmem_max
-	chown system system /system/etc/sensors.dat
-	chown system system /system/etc/calib.dat
-	chown system system /system/etc/param.dat
-	chmod 0664 /system/etc/sensors.dat
-	chmod 0664 /system/etc/calib.dat
-	chmod 0664 /system/etc/param.dat
+    chown system system /system/etc/sensors.dat
+    chown system system /system/etc/calib.dat
+    chown system system /system/etc/param.dat
+    chmod 0664 /system/etc/sensors.dat
+    chmod 0664 /system/etc/calib.dat
+    chmod 0664 /system/etc/param.dat
     chown root radio /proc/cmdline
     chown system input /sys/class/sensors/accelerometer_sensor/calibration
     chown system system /sys/class/input/input2/enable
@@ -94,7 +55,7 @@ on boot
     chown radio system /sys/devices/virtual/sec/sec_touchkey/touchkey_raw_data
     chown radio system /sys/class/sec/sec_touchscreen/disp_all_insdata
     chown radio system /sys/class/sec/sec_touchscreen/disp_all_intdata
-	chmod 1664 sys/class/misc/zinitix_touch_misc
+    chmod 1664 sys/class/misc/zinitix_touch_misc
     chown radio fm_radio /sys/devices/platform/gpio-event/wakeup_keys
 
 #change permissions for battery
@@ -111,18 +72,17 @@ on boot
 # RTC
     chown radio system /sys/class/rtc/rtc0/bootalarm
     chmod 0664 /sys/class/rtc/rtc0/bootalarm
-
     class_start default
-# for Wi-Fi
-#    setprop wifi.interface wlan0
-#    insmod /system/wifi/ar6000.ko "ifname=wlan0"
-#    setprop wlan.driver.apmode "unloaded"
-#    setprop wlan.driver.wapi_supported true
-#     setprop wifi.wapi.supported true
-
 
 # Remount /system ro to protect the filesystem
 	mount ext4 /dev/block/mmcblk0p16 /system ro remount
+
+service dhcp-service /system/bin/netcfg wlan0 dhcp
+        oneshot
+
+on property:dev.bootcomplete=1
+        stop dhcp-service
+        start dhcp-service
 
 service qmuxd /system/bin/qmuxd
 
@@ -141,13 +101,6 @@ service wpa_supplicant /system/bin/wpa_supplicant -Dawext -W -w -iwlan0 -c/data/
 	socket wpa_wlan0 dgram 660 wifi wifi
 	disabled
 	oneshot
-
-# create filesystems if necessary
-#service setup_fs /system/bin/setup_fs /dev/block/stl13 /dev/block/stl14
-#    user root
-#    group root
-#    oneshot
-
 
 service wlan_mac /system/bin/wlan_mac
     user system
@@ -179,12 +132,6 @@ service hostapd /system/bin/hostapd /data/misc/wifi/hostapd.conf
 	group wifi inet
 	oneshot
 	disabled
-
-#service hciattach /system/bin/brcm_patchram_plus --enable_hci --enable_lpm --baudrate 3000000 --patchram /system/bin/BCM2049C0_003.001.031.0088.0094.hcd /#dev/ttyHS0
-#	user bluetooth
-#	group bluetooth net_bt_admin
-#	disabled
-#	oneshot
 
 service gps-daemon /system/vendor/bin/gpsd
     user system

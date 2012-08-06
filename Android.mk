@@ -1,6 +1,3 @@
-LOCAL_PATH := $(call my-dir)
-
 ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),trebon)
-
-include $(call all-makefiles-under,$(LOCAL_PATH))
+include $(call first-makefiles-under,$(call my-dir))
 endif
