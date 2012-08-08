@@ -6,18 +6,35 @@ on emmc
     mkdir /config 0500 root root
     mkdir /persist 0771 system system
     mkdir /efs 0771 system system
-    devwait emmc@system
-    mount ext4 emmc@system /system barrier=1
 
-    devwait emmc@userdata
-    mount ext4 emmc@userdata /data noatime nosuid nodev barrier=1 nodelalloc
+# Mount /proc/emmc
+#    devwait emmc@system
+#    mount ext4 emmc@system /system barrier=1
 
-    devwait emmc@cache
-    mount ext4 emmc@cache /cache noatime nosuid nodev barrier=1
+#    devwait emmc@userdata
+#    mount ext4 emmc@userdata /data noatime nosuid nodev barrier=1 nodelalloc
 
-    devwait emmc@efs
-    mount ext4 emmc@efs /efs noatime nosuid nodev barrier=1
+#    devwait emmc@cache
+#    mount ext4 emmc@cache /cache noatime nosuid nodev barrier=1
 
+#    devwait emmc@efs
+#    mount ext4 emmc@efs /efs noatime nosuid nodev barrier=1
+
+# Mount a la samsung
+    wait /dev/block/mmcblk0p16
+    mount ext4 /dev/block/mmcblk0p16 /system barrier=1
+
+    wait /dev/block/mmcblk0p18
+    exec /system/bin/e2fsck -v -y /dev/block/mmcblk0p18
+    mount ext4 /dev/block/mmcblk0p18 /data nosuid nodev barrier=1 noauto_da_alloc
+
+    mount ext4 /dev/block/mmcblk0p17 /cache nosuid nodev barrier=1
+
+    wait /dev/block/mmcblk0p19
+    exec check_filesystem /dev/block/mmcblk0p19 ext4
+    mount ext4 /dev/block/mmcblk0p19 /efs nosuid nodev barrier=1
+
+# Permissions
     chown radio system /efs
     chmod 0771 /efs
     mkdir /efs/imei 0775
