@@ -76,7 +76,8 @@ PRODUCT_COPY_FILES += \
 # Init
 PRODUCT_COPY_FILES += \
     device/samsung/trebon/init.gt-s7500.rc:root/init.gt-s7500.rc \
-    device/samsung/trebon/ueventd.gt-s7500.rc:root/ueventd.gt-s7500.rc
+    device/samsung/trebon/ueventd.gt-s7500.rc:root/ueventd.gt-s7500.rc \
+    device/samsung/trebon/init.emmc.rc:root/init.emmc.rc
 
 # 3d
 PRODUCT_COPY_FILES += \
