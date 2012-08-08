@@ -74,9 +74,6 @@ on boot
     chmod 0664 /sys/class/rtc/rtc0/bootalarm
     class_start default
 
-# Remount /system ro to protect the filesystem
-	mount ext4 /dev/block/mmcblk0p16 /system ro remount
-
 service dhcp-service /system/bin/netcfg wlan0 dhcp
         oneshot
 
