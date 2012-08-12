@@ -1,4 +1,20 @@
-on emmc
+on early-init
+    mkdir /mnt/sdcard 0000 system system
+    # for backwards compatibility
+    symlink /mnt/sdcard /sdcard
+
+    mkdir /mnt/external_sd 0000 system system
+    symlink /mnt/external_sd /external_sd
+
+on early-fs
+    mkdir /system
+    mkdir /data 0771 system system
+    mkdir /cache 0771 system cache
+    mkdir /config 0500 root root
+    mkdir /efs 0771 system system
+    mkdir /persist 0771 system system
+
+on emmc-fs
     mkdir /system
     mkdir /data 0771 system system
     mkdir /persist 0771 system system
